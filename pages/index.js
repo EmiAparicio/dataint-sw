@@ -3,6 +3,7 @@ import styles from "../styles/Home.module.css";
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import SearchInput from "../components/SearchInput";
+import ShowCards from "../components/ShowCards";
 
 // SSR Fetching with AXIOS
 export async function getServerSideProps() {
@@ -86,21 +87,11 @@ export default function Home({ chars, pages, prev, next }) {
           toSearch="character"
         />
 
-        <div className={styles.grid}>
-          {page.loading ? (
-            <h2>Loading...</h2>
-          ) : page.chars.length !== 0 ? (
-            page.chars.map((char, i) => {
-              return (
-                <div key={i} className={styles.card}>
-                  {char.name}
-                </div>
-              );
-            })
-          ) : (
-            <h2>Character not found!</h2>
-          )}
-        </div>
+        <ShowCards
+          loading={page.loading}
+          data={page.chars}
+          infoType="Character"
+        />
       </main>
     </div>
   );
