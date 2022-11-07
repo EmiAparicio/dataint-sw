@@ -1,21 +1,68 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import Axios from "axios";
+import { useEffect, useState } from "react";
+import SearchInput from "../components/SearchInput";
 
 // SSR Fetching with AXIOS
 export async function getServerSideProps() {
   // First page is fetched
   const resp = await Axios.get("https://swapi.dev/api/people/");
+  const data = resp.data;
 
   return {
     props: {
-      chars: resp.data.results,
+      chars: data.results,
+      pages: Math.ceil(data.count / data.results.length),
+      prev: data.prev || null,
+      next: data.next || null,
     },
   };
 }
 
 // APP Landing page
-export default function Home({ chars }) {
+export default function Home({ chars, pages, prev, next }) {
+  // Set displaying information in page local state
+  const [page, setPage] = useState({
+    chars,
+    pages,
+    prev,
+    next,
+    loading: false,
+  });
+
+  // Searching handler
+  async function handleSearch(inputValue) {
+    // When cleaning search bar: go back faster to the first page data, which is already stored in props
+    if (inputValue.length === 0) {
+      setPage({
+        chars,
+        pages,
+        prev,
+        next,
+        loading: false,
+      });
+      return;
+    }
+
+    // Fetch character by name with inputValue coming from parameters
+    const data = await (async () => {
+      const resp = await Axios.get(
+        `https://swapi.dev/api/people/?search=${inputValue}`
+      );
+      return resp.data;
+    })();
+
+    // Refresh displayed page
+    setPage({
+      chars: data.results,
+      pages: Math.ceil(data.count / data.results.length),
+      prev: data.prev || null,
+      next: data.next || null,
+      loading: false,
+    });
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -30,14 +77,29 @@ export default function Home({ chars }) {
       <main className={styles.main}>
         <h1 className={styles.title}>StarWars Characters</h1>
 
+        {/* Send the search input component a function that triggers "loading" screen while founding new data. Add a placeholder to "toSearch" props for customization. */}
+        <SearchInput
+          cb={(value) => {
+            setPage((prev) => ({ ...prev, loading: true }));
+            handleSearch(value);
+          }}
+          toSearch="character"
+        />
+
         <div className={styles.grid}>
-          {chars?.map((char, i) => {
-            return (
-              <div key={i} className={styles.card}>
-                {char.name}
-              </div>
-            );
-          })}
+          {page.loading ? (
+            <h2>Loading...</h2>
+          ) : page.chars.length !== 0 ? (
+            page.chars.map((char, i) => {
+              return (
+                <div key={i} className={styles.card}>
+                  {char.name}
+                </div>
+              );
+            })
+          ) : (
+            <h2>Character not found!</h2>
+          )}
         </div>
       </main>
     </div>
