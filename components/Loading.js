@@ -1,4 +1,8 @@
 export default function Loading({ loading, errorStyle, infoType, display }) {
+  // loading: condition to show "loading", data or "not found"
+  // errorStyle: styles for text
+  // infoType: text describing data being loaded
+  // display: data to be displayed
   return (
     <>
       {loading ? (
