@@ -63,7 +63,9 @@ export default function Detail({
   return (
     <div className={styles.container}>
       <div className={`${styles.cardContainer} card text-center`}>
-        <div className="card-header">StarWars Character</div>
+        <div className={`${styles.cardHeader} card-header`}>
+          StarWars Character
+        </div>
         <div className="card-body">
           <h5 className="card-title">{name}</h5>
           <p className={`${styles.cardText} card-text`}>
@@ -91,6 +93,7 @@ export default function Detail({
               {starships.length > 0 ? starships.join(", ") : "none"}
             </span>
           </p>
+
           <Link href="/" className="btn btn-primary btn-dark">
             Go home!
           </Link>

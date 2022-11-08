@@ -1,6 +1,6 @@
 // import "../styles/Pagination.css";
 
-export default function Pagination({ pages, prev, next, pageChange }) {
+export default function Pagination({ curPage, pages, prev, next, pageChange }) {
   // Generate array depending on pages needed
   const pagesNum = pages > 0 ? [...Array(pages).keys()].map((i) => i + 1) : [];
 
@@ -11,6 +11,7 @@ export default function Pagination({ pages, prev, next, pageChange }) {
       {pagesNum.length > 0 ? (
         <div aria-label="Search result pages">
           <ul className="pagination">
+            {/* Previous Page Button */}
             <li className={!prev ? "page-item disabled" : "page-item"}>
               <a
                 className="page-link"
@@ -21,9 +22,13 @@ export default function Pagination({ pages, prev, next, pageChange }) {
               </a>
             </li>
 
+            {/* Number of Page Button */}
             {pagesNum.map((n) => {
               return (
-                <li className="page-item" key={n}>
+                <li
+                  className={curPage === n ? "page-item active" : "page-item"}
+                  key={n}
+                >
                   <a className="page-link" onClick={() => pageChange(n)}>
                     {n}
                   </a>
@@ -31,6 +36,7 @@ export default function Pagination({ pages, prev, next, pageChange }) {
               );
             })}
 
+            {/* Next Page Button */}
             <li className={!next ? "page-item disabled" : "page-item"}>
               <a
                 className="page-link"

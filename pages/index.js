@@ -35,6 +35,9 @@ export default function Home({ chars, curPage, pages, prev, next }) {
     loading: false,
   });
 
+  // Use this state to know if a certain URL was used to search characters and allow pagination to follow the obtained data
+  const [searchURL, setSearchURL] = useState("");
+
   // Searching handler
   async function handleSearch(inputValue) {
     // When cleaning search bar: go back faster to the first page data, which is already stored in props
@@ -47,8 +50,11 @@ export default function Home({ chars, curPage, pages, prev, next }) {
         next,
         loading: false,
       });
+      setSearchURL("");
       return;
     }
+
+    setSearchURL(`https://swapi.dev/api/people/?search=${inputValue}`);
 
     // Fetch character by name with inputValue coming from parameters
     const resp = await Axios.get(
@@ -71,9 +77,13 @@ export default function Home({ chars, curPage, pages, prev, next }) {
     // Parameter "to" includes the URL when Previous or Next buttons were pressed.
     // If a page was picked, URL needs to be built
     let fetchUrl = to;
+    let curPage = to;
     if (typeof to === "number") {
       fetchUrl = `https://swapi.dev/api/people/?page=${to}`;
-    }
+
+      // Search + Pagination URL config
+      if (searchURL.length) fetchUrl = searchURL + `&page=${to}`;
+    } else curPage = to.split("/").at(-2);
 
     // Fetch characters by page depending on "to" coming from parameters
     const resp = await Axios.get(fetchUrl);
@@ -82,7 +92,7 @@ export default function Home({ chars, curPage, pages, prev, next }) {
     // Refresh displayed page
     setPage({
       chars: data.results,
-      curPage: 1,
+      curPage,
       pages: Math.ceil(data.count / 10),
       prev: data.previous || null,
       next: data.next || null,
@@ -116,7 +126,9 @@ export default function Home({ chars, curPage, pages, prev, next }) {
         {page.loading ? (
           <></>
         ) : (
+          // Send Pagination Component the current page, the total number of pages, the previous and next pages URLs, and a callback function to control loading texts and handle page changing
           <Pagination
+            curPage={page.curPage}
             pages={page.pages}
             prev={page.prev}
             next={page.next}
@@ -127,6 +139,7 @@ export default function Home({ chars, curPage, pages, prev, next }) {
           />
         )}
 
+        {/* Send ShowCards Component the loading boolean, data to be displayed and its type as a string to control error texts */}
         <ShowCards
           loading={page.loading}
           data={page.chars}
