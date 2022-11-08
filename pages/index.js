@@ -83,7 +83,9 @@ export default function Home({ chars, curPage, pages, prev, next }) {
 
       // Search + Pagination URL config
       if (searchURL.length) fetchUrl = searchURL + `&page=${to}`;
-    } else curPage = to.split("/").at(-2);
+    } else {
+      curPage = Number(to.split("page=").at(-1));
+    }
 
     // Fetch characters by page depending on "to" coming from parameters
     const resp = await Axios.get(fetchUrl);

@@ -10,12 +10,11 @@ export default function ShowCards({ loading, data, infoType }) {
           return (
             // Get character id from URL property
             <Link
+              key={i}
               href={`/detail/${char.url.split("/").at(-2)}`}
               className={styles.link}
             >
-              <div key={i} className={styles.card}>
-                {char.name}
-              </div>
+              <div className={styles.card}>{char.name}</div>
             </Link>
           );
         })
