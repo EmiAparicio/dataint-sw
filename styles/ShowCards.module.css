@@ -40,3 +40,7 @@
   text-shadow: 0 0 5px #020d17, 0 0 5px #020d17, 0 0 5px #020d17,
     0 0 5px #020d17, 0 0 5px #020d17, 0 0 5px #020d17;
 }
+
+.link {
+  text-decoration: none;
+}

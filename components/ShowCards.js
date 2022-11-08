@@ -1,3 +1,4 @@
+import Link from "next/link";
 import styles from "../styles/ShowCards.module.css";
 import Loading from "./Loading";
 
@@ -7,9 +8,15 @@ export default function ShowCards({ loading, data, infoType }) {
     data.length !== 0
       ? data.map((char, i) => {
           return (
-            <div key={i} className={styles.card}>
-              {char.name}
-            </div>
+            // Get character id from URL property
+            <Link
+              href={`/detail/${char.url.split("/").at(-2)}`}
+              className={styles.link}
+            >
+              <div key={i} className={styles.card}>
+                {char.name}
+              </div>
+            </Link>
           );
         })
       : false;

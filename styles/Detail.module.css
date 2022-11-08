@@ -1,0 +1,22 @@
+.container {
+  height: 100vh;
+  background-image: url("https://wallpaperaccess.com/full/2101913.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardContainer {
+  width: 30vw;
+}
+
+.cardText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+}
