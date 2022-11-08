@@ -1,5 +1,9 @@
 .container {
   height: 100vh;
+  background-image: url("https://wallpaperaccess.com/full/2101913.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 .main {
@@ -13,10 +17,16 @@
 }
 
 .title {
+  user-select: none;
   margin: 0;
+  margin-bottom: 15vh;
+  margin-top: -5vh;
   line-height: 1.15;
-  font-size: 4rem;
+  font-size: 8vh;
   text-align: center;
+  color: #ffe414;
+  text-shadow: 0 0 15px #020d17, 0 0 15px #020d17, 0 0 15px #020d17,
+    0 0 15px #020d17, 0 0 15px #020d17, 0 0 15px #020d17;
 }
 
 @media (max-width: 600px) {

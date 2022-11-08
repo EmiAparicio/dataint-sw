@@ -1,21 +1,26 @@
 import styles from "../styles/ShowCards.module.css";
+import Loading from "./Loading";
 
 export default function ShowCards({ loading, data, infoType }) {
-  return (
-    <div className={styles.grid}>
-      {loading ? (
-        <h2>Loading...</h2>
-      ) : data.length !== 0 ? (
-        data.map((char, i) => {
+  const display =
+    data.length !== 0
+      ? data.map((char, i) => {
           return (
             <div key={i} className={styles.card}>
               {char.name}
             </div>
           );
         })
-      ) : (
-        <h2>{infoType} not found!</h2>
-      )}
+      : false;
+
+  return (
+    <div className={styles.grid}>
+      <Loading
+        loading={loading}
+        errorStyle={styles.error}
+        infoType={infoType}
+        display={display}
+      />
     </div>
   );
 }

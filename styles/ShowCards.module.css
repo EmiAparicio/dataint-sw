@@ -12,11 +12,15 @@
 }
 
 .card {
+  display: flex;
+  justify-content: center;
+  font-weight: 700;
   padding: 1.5rem;
-  text-align: left;
-  color: inherit;
+
+  background-color: #ffffff;
+  color: #6c757d;
   text-decoration: none;
-  border: 1px solid #eaeaea;
+  border: 1px solid #6c757d;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
   max-width: 18vw;
@@ -26,6 +30,13 @@
 .card:hover,
 .card:focus,
 .card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+  color: #ffe414;
+  border-color: #ffe414;
+  background-color: #020d17;
+}
+
+.error {
+  color: #ffe414;
+  text-shadow: 0 0 5px #020d17, 0 0 5px #020d17, 0 0 5px #020d17,
+    0 0 5px #020d17, 0 0 5px #020d17, 0 0 5px #020d17;
 }

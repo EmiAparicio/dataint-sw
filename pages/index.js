@@ -17,7 +17,7 @@ export async function getServerSideProps() {
       chars: data.results,
       curPage: 1,
       pages: Math.ceil(data.count / 10),
-      prev: data.prev || null,
+      prev: data.previous || null,
       next: data.next || null,
     },
   };
