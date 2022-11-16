@@ -6,7 +6,7 @@ export function promisify(array, preURL) {
   // The "preURL" depends on the desired endpoint to consume from the external API
   return array.map((e) =>
     e.length
-      ? Axios.get(`https://swapi.dev/api/${preURL}/${e.split("/").at(-2)}`)
+      ? Axios.get(`https://swapi.py4e.com/api/${preURL}/${e.split("/").at(-2)}`)
       : null
   );
 }
