@@ -9,7 +9,7 @@ import Pagination from "../components/Pagination";
 // SSR Fetching with AXIOS
 export async function getServerSideProps() {
   // First page of characters is fetched
-  const resp = await Axios.get("https://swapi.dev/api/people/");
+  const resp = await Axios.get("https://swapi.py4e.com/api/people/");
   const data = resp.data;
 
   return {
@@ -54,11 +54,11 @@ export default function Home({ chars, curPage, pages, prev, next }) {
       return;
     }
 
-    setSearchURL(`https://swapi.dev/api/people/?search=${inputValue}`);
+    setSearchURL(`https://swapi.py4e.com/api/people/?search=${inputValue}`);
 
     // Fetch character by name with inputValue coming from parameters
     const resp = await Axios.get(
-      `https://swapi.dev/api/people/?search=${inputValue}`
+      `https://swapi.py4e.com/api/people/?search=${inputValue}`
     );
     const data = resp.data;
 
@@ -79,7 +79,7 @@ export default function Home({ chars, curPage, pages, prev, next }) {
     let fetchUrl = to;
     let curPage = to;
     if (typeof to === "number") {
-      fetchUrl = `https://swapi.dev/api/people/?page=${to}`;
+      fetchUrl = `https://swapi.py4e.com/api/people/?page=${to}`;
 
       // Search + Pagination URL config
       if (searchURL.length) fetchUrl = searchURL + `&page=${to}`;
