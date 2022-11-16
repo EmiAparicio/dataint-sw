@@ -6,7 +6,9 @@ import Link from "next/link";
 // SSR Fetching with AXIOS
 export async function getServerSideProps({ params }) {
   // Character fetched by id from params
-  const resp = await Axios.get(`https://swapi.dev/api/people/${params.char}`);
+  const resp = await Axios.get(
+    `https://swapi.py4e.com/api/people/${params.char}`
+  );
   const data = resp.data;
 
   // Convert urls into promises with imported function "promisify"
